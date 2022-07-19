@@ -9,7 +9,7 @@ class Chofer {
         this.coche = coche;
     }
 }
-const choferes = [];
+const choferes = [];    
 
 choferes.push(new Chofer("Alfonso", "Franco", "3100", "Mañana","1"));
 choferes.push(new Chofer("Jimenez", "Leonardo", "2738", "Mañana","2"));
@@ -175,12 +175,12 @@ for (citacion of choferes){
 let informarLegajo;
 
 do{
-    informarLegajo = (parseInt(prompt ("Cuál es su legajo")));
+    informarLegajo = (parseInt(prompt ("Cuál es su legajo? Legajos disponibles: 2072 - 2364 - 2498 - 2738 - 2749 - 2936 - 2939 - 3005 - 3082 - 3100")));
 
 if (choferes.some ((el) => el.legajo == informarLegajo)==true){
     break;
 } else{
-    alert ("El legajo que ingresó no se encuentra en nuestra base de datos");
+    alert ("El legajo que ingresó no se encuentra en nuestra base de datos. Intente nuevamente.");
 }
 } while (choferes.some ((el) => el.legajo == informarLegajo) == false);
 
