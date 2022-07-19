@@ -171,8 +171,19 @@ for (citacion of choferes){
 }
 
 //Una vez obtenido el legajo del chofer, utilizo el findIndex para informarle sus horarios
-    
-let informarLegajo = (parseInt(prompt ("Cuál es su legajo")));
+
+let informarLegajo;
+
+do{
+    informarLegajo = (parseInt(prompt ("Cuál es su legajo")));
+
+if (choferes.some ((el) => el.legajo == informarLegajo)==true){
+    break;
+} else{
+    alert ("El legajo que ingresó no se encuentra en nuestra base de datos");
+}
+} while (choferes.some ((el) => el.legajo == informarLegajo) == false);
+
 
 const indexLegajo = choferes.findIndex ((el) => el.legajo == informarLegajo);
 
