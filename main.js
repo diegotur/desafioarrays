@@ -123,10 +123,11 @@ break;
 }
 
 let numCoche = [primero, segundo, tercero, cuarto, quinto];
-    
-// Utilizo un "for of" para completar los párametros vacíos de "turnos" 
 
-for (citacion of choferes){
+ 
+// Utilizo un "forEach" para completar los párametros vacíos de "turnos" 
+
+choferes.forEach ((citacion) => {
 
     for (i=0; i<numCoche.length;i++){
 
@@ -168,48 +169,63 @@ for (citacion of choferes){
             }
         }
     } 
-}
+})
 
 //Una vez obtenido el legajo del chofer, utilizo el findIndex para informarle sus horarios
 
+//Agregué menu principal para consultar todos los turnos de la semana, o turnos por legajo
+
 let informarLegajo;
 
+
+let menu;
+
 do{
-    informarLegajo = (parseInt(prompt ("Cuál es su legajo? Legajos disponibles: 2072 - 2364 - 2498 - 2738 - 2749 - 2936 - 2939 - 3005 - 3082 - 3100")));
+    menu = (parseInt(prompt ("CONSULTA CITACIONES POR COCHE (INGRESE 1) / CONSULTA CITACIONES POR LEGAJO (INGRESE 2)")));
+    
+    if (menu == "1" || menu == "2"){
+        if (menu == 1){
+            document.write ("TURNO - CIT TM - CIT TT - LUNES - MARTES - MIERCOLES - JUEVES - VIERNES" + "<br>" + "---- 1 ------ 00:20 ----- 12:34 " + "-------"+ numCoche [0].primerCoche + " --------- " + numCoche [0].segundoCoche + " -------------- " + numCoche [0].tercerCoche + " -------------- " + numCoche [0].cuartoCoche + " ----------- " + numCoche [0].quintoCoche + "<br>" + "---- 2 ------ 00:54 ----- 12:53 " + "-------"+ numCoche [1].primerCoche + " --------- " + numCoche [1].segundoCoche + " -------------- " + numCoche [1].tercerCoche + " -------------- " + numCoche [1].cuartoCoche  + " ----------- " + numCoche [1].quintoCoche + "<br>" + "---- 3 ------ 01:33 ----- 13:00 "+ "-------" + numCoche [2].primerCoche + " --------- " + numCoche [2].segundoCoche + " -------------- " + numCoche [2].tercerCoche + " -------------- " + numCoche [2].cuartoCoche + " ----------- " + numCoche [2].quintoCoche + "<br>" + "---- 4 ------ 02:07 ----- 13:20 " + "-------"+ numCoche [3].primerCoche + " --------- " + numCoche [3].segundoCoche + " -------------- " + numCoche [3].tercerCoche + " -------------- " + numCoche [3].cuartoCoche + " ----------- " + numCoche [3].quintoCoche + "<br>" + "---- 5 ------ 02:39 ----- 13:25 " + "-------"+ numCoche [4].primerCoche + " --------- " + numCoche [4].segundoCoche + " -------------- " + numCoche [4].tercerCoche + " -------------- " + numCoche [4].cuartoCoche + " ----------- " + numCoche [4].quintoCoche + "<br>");
+            break;
+        } else if (menu == 2){
+            do{
+                informarLegajo = (parseInt(prompt ("Cuál es su legajo? Legajos disponibles: 2072 - 2364 - 2498 - 2738 - 2749 - 2936 - 2939 - 3005 - 3082 - 3100")));
+                
+                if (choferes.some ((el) => el.legajo == informarLegajo)==true){
+                    const indexLegajo = choferes.findIndex ((el) => el.legajo == informarLegajo);
 
-if (choferes.some ((el) => el.legajo == informarLegajo)==true){
-    break;
-} else{
-    alert ("El legajo que ingresó no se encuentra en nuestra base de datos. Intente nuevamente.");
-}
-} while (choferes.some ((el) => el.legajo == informarLegajo) == false);
+                    const citLunes = turnos.findIndex ((el) => el.legajoLunesTM == informarLegajo || el.legajoLunesTT == informarLegajo);
+                    const citMartes = turnos.findIndex ((el) => el.legajoMartesTM == informarLegajo || el.legajoMartesTT == informarLegajo);
+                    const citMiercoles = turnos.findIndex ((el) => el.legajoMiercolesTM == informarLegajo || el.legajoMiercolesTT == informarLegajo);
+                    const citJueves = turnos.findIndex ((el) => el.legajoJuevesTM == informarLegajo || el.legajoJuevesTT == informarLegajo);
+                    const citViernes = turnos.findIndex ((el) => el.legajoViernesTM == informarLegajo || el.legajoViernesTT == informarLegajo);
 
+                    const findTurno = choferes.some ((el) => el.turno == "Mañana" && el.legajo == informarLegajo);
 
-const indexLegajo = choferes.findIndex ((el) => el.legajo == informarLegajo);
+                    if (findTurno == true){
+                    document.write ("Bienvenido " + choferes[indexLegajo].nombre + " " + choferes[indexLegajo].apellido + "<br>"); 
+                    document.write ("citacion Lunes: " + turnos[citLunes].citacionTM + "<br>");
+                    document.write ("citacion Martes: " + turnos[citMartes].citacionTM + "<br>");
+                    document.write ("citacion Miercoles: " + turnos[citMiercoles].citacionTM + "<br>");
+                    document.write ("citacion Jueves: " + turnos[citJueves].citacionTM + "<br>");
+                    document.write ("citacion Viernes: " + turnos[citViernes].citacionTM + "<br>");
+                    } else if (findTurno == false){
+                    document.write ("Bienvenido " + choferes[indexLegajo].nombre + " " + choferes[indexLegajo].apellido + "<br>"); 
+                    document.write ("citacion Lunes: " + turnos[citLunes].citacionTT + "<br>");
+                    document.write ("citacion Martes: " + turnos[citMartes].citacionTT + "<br>");
+                    document.write ("citacion Miercoles: " + turnos[citMiercoles].citacionTT + "<br>");
+                    document.write ("citacion Jueves: " + turnos[citJueves].citacionTT + "<br>");
+                    document.write ("citacion Viernes: " + turnos[citViernes].citacionTT + "<br>");
+                    }; 
+                    break;
+                } else{
+                    alert ("El legajo que ingresó no se encuentra en nuestra base de datos. Intente nuevamente.");
+                }
+            } while (choferes.some ((el) => el.legajo == informarLegajo) == false);
+            break;
+        } else {
+            alert ("Error. Seleccione una opción del menú.");
+        }
+    }
+}while (menu != "1" || menu != "2");
 
-const citLunes = turnos.findIndex ((el) => el.legajoLunesTM == informarLegajo || el.legajoLunesTT == informarLegajo);
-const citMartes = turnos.findIndex ((el) => el.legajoMartesTM == informarLegajo || el.legajoMartesTT == informarLegajo);
-const citMiercoles = turnos.findIndex ((el) => el.legajoMiercolesTM == informarLegajo || el.legajoMiercolesTT == informarLegajo);
-const citJueves = turnos.findIndex ((el) => el.legajoJuevesTM == informarLegajo || el.legajoJuevesTT == informarLegajo);
-const citViernes = turnos.findIndex ((el) => el.legajoViernesTM == informarLegajo || el.legajoViernesTT == informarLegajo);
-
-const findTurno = choferes.some ((el) => el.turno == "Mañana" && el.legajo == informarLegajo);
-
-console.log (findTurno);
-
-
-if (findTurno == true){
-document.write ("Bienvenido " + choferes[indexLegajo].nombre + " " + choferes[indexLegajo].apellido + "<br>"); 
-document.write ("citacion Lunes: " + turnos[citLunes].citacionTM + "<br>");
-document.write ("citacion Martes: " + turnos[citMartes].citacionTM + "<br>");
-document.write ("citacion Miercoles: " + turnos[citMiercoles].citacionTM + "<br>");
-document.write ("citacion Jueves: " + turnos[citJueves].citacionTM + "<br>");
-document.write ("citacion Viernes: " + turnos[citViernes].citacionTM + "<br>");
-} else if (findTurno == false){
-document.write ("Bienvenido " + choferes[indexLegajo].nombre + " " + choferes[indexLegajo].apellido + "<br>"); 
-document.write ("citacion Lunes: " + turnos[citLunes].citacionTT + "<br>");
-document.write ("citacion Martes: " + turnos[citMartes].citacionTT + "<br>");
-document.write ("citacion Miercoles: " + turnos[citMiercoles].citacionTT + "<br>");
-document.write ("citacion Jueves: " + turnos[citJueves].citacionTT + "<br>");
-document.write ("citacion Viernes: " + turnos[citViernes].citacionTT + "<br>");
-} 
